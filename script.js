@@ -23,15 +23,15 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return document.querySelector('.items').appendChild(section);
 };
-const getProduct = async () => {
-  const request = await fetchProducts('computador');
-  request.results.forEach((item) => {
-    const product = {
+const produto = async () => {
+  const pedido = await fetchProducts('computador');
+  pedido.results.forEach((item) => {
+    const produtos = {
       sku: item.id,
       name: item.title,
       image: item.thumbnail,
     };
-    return createProductItemElement(product);
+    return createProductItemElement(produtos);
   });
 };
 
@@ -60,4 +60,4 @@ const itens = async () => {
     document.querySelector('.items').appendChild(confItem);
   });
 };
-window.onload = () => { getProduct(); };
+window.onload = () => { produto(); };
