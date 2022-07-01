@@ -5,8 +5,8 @@ localStorageSimulator('setItem');
 
 describe('3 - Teste a função saveCartItems', () => {
   // implemente seus testes aqui
-  fail('Teste vazio');
-  it('Testa se ao executar saveCartItems o método localStorage.setItem é chamado', () => {    
+  // fail('Teste vazio');
+  it('Testa se ao executar saveCartItems o método localStorage.setItem é chamado', () => {        
     saveCartItems('<ol><li>Item</li></ol>');
     expect(localStorage.setItem).toHaveBeenCalled();
   });
