@@ -50,25 +50,4 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
-const createCart = () => {
-  const buttonAdd = document.getElementsByClassName('item__add');
- Array.from(buttonAdd).forEach((button) => button.addEventListener('click', async () => {
-    const idItem = button.parentNode.querySelector('.item__sku').innerText;
-    const { id, title, price } = await fetchItem(idItem);
-    const ol = document.getElementsByClassName('cart__items')[0];
-    ol.appendChild(createCartItemElement({ sku: id, name: title, salePrice: price }));
-  }));
-};
-
-const createHtml = async () => {
-  (await fetchProducts('computador')).results
-  .map((objeto) => ({ sku: objeto.id, name: objeto.title, image: objeto.thumbnail }))
-  .map(createProductItemElement)
-  .forEach((objeto) => document.getElementsByClassName('items')[0].appendChild(objeto));
-
-  createCart();
-};
-
-window.onload = () => createHtml();
-
-// window.onload = () => { produto(); };
+ window.onload = () => { produto(); };
