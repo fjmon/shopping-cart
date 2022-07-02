@@ -50,4 +50,18 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
   return li;
 };
 
+const adProdCar = () => {
+  const prod = document.querySelector('.items');
+  const pai = document.querySelector('.cart__items');
+  prod.addEventListener('click', async (event) => {
+    if (event.target.classList.contains('item__add')) {
+      const id = getSkuFromProductItem(event.target.parentElement);
+      const item = await fetchItem(id);
+      const objeto = { sku: item.id, name: item.title, salePrice: item.price };
+      pai.appendChild(createCartItemElement(objeto));
+    }
+  });
+};
+adProdCar();
+
  window.onload = () => { produto(); };
