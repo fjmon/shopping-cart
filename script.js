@@ -1,4 +1,5 @@
 const pai = document.querySelector('.cart__items');
+const itens = document.querySelector('.items');
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -72,5 +73,16 @@ const limpaCar = () => {
   });
   };
   limpaCar();
+
+  const load = async () => {
+    const elemP = document.createElement('p');
+    elemP.className = 'loading';
+    elemP.innerText = 'carregando...';
+    itens.appendChild(elemP);
+  
+   await fetchProducts('computador');
+  document.querySelector('.loading').remove();
+  };
+  load();
 
  window.onload = () => { produto(); };
