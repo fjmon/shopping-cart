@@ -1,3 +1,4 @@
+const pai = document.querySelector('.cart__items');
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -52,7 +53,6 @@ const createCartItemElement = ({ sku, name, salePrice }) => {
 
 const adProdCar = () => {
   const prod = document.querySelector('.items');
-  const pai = document.querySelector('.cart__items');
   prod.addEventListener('click', async (event) => {
     if (event.target.classList.contains('item__add')) {
       const id = getSkuFromProductItem(event.target.parentElement);
@@ -63,5 +63,14 @@ const adProdCar = () => {
   });
 };
 adProdCar();
+
+const limpaCar = () => {
+  const carroLimpo = document.querySelector('.empty-cart');
+  carroLimpo.addEventListener('click', () => {
+  localStorage.clear();
+  pai.innerHTML = '';
+  });
+  };
+  limpaCar();
 
  window.onload = () => { produto(); };
