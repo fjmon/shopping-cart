@@ -1,5 +1,6 @@
 const pai = document.querySelector('.cart__items');
 const itens = document.querySelector('.items');
+
 const createProductImageElement = (imageSource) => {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -25,6 +26,28 @@ const createProductItemElement = ({ sku, name, image }) => {
 
   return document.querySelector('.items').appendChild(section);
 };
+
+const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
+
+// req 10 - Limpe o carrinho de compras
+const cartItemClickListener = (event) => {
+  event.target.remove();
+  saveCartItems(pai.innerHTML);
+};
+const carItens = () => {  
+  pai.innerHTML = getSavedCartItems();
+  pai.addEventListener('click', cartItemClickListener);
+};
+
+const createCartItemElement = ({ sku, name, salePrice }) => {
+  const li = document.createElement('li');
+  li.className = 'cart__item';
+  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  pai.appendChild(li);
+  saveCartItems(pai.innerHTML);  
+};
+
+// req 2 - Crie uma listagem de produtos
 const produto = async () => {
   const pedido = await fetchProducts('computador');
   pedido.results.forEach((item) => {
@@ -37,21 +60,7 @@ const produto = async () => {
   });
 };
 
-const getSkuFromProductItem = (item) => item.querySelector('span.item__sku').innerText;
-
-const cartItemClickListener = (event) => {
-  // coloque seu código aqui
-  event.target.remove();
-};
-
-const createCartItemElement = ({ sku, name, salePrice }) => {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-};
-
+// req 4 - Adicione o produto ao carrinho de compras
 const adProdCar = () => {
   const prod = document.querySelector('.items');
   prod.addEventListener('click', async (event) => {
@@ -60,29 +69,34 @@ const adProdCar = () => {
       const item = await fetchItem(id);
       const objeto = { sku: item.id, name: item.title, salePrice: item.price };
       pai.appendChild(createCartItemElement(objeto));
+      // fazer uma nova função que abarque sku em lista e salvar e subir ao ls
     }
   });
 };
 adProdCar();
 
+// req 5 - Remova o item do carrinho de compras ao clicar nele
 const limpaCar = () => {
   const carroLimpo = document.querySelector('.empty-cart');
   carroLimpo.addEventListener('click', () => {
-  localStorage.clear();
-  pai.innerHTML = '';
+    localStorage.clear();
+    pai.innerHTML = '';
   });
-  };
-  limpaCar();
+};
+limpaCar();
 
-  const load = async () => {
-    const elemP = document.createElement('p');
-    elemP.className = 'loading';
-    elemP.innerText = 'carregando...';
-    itens.appendChild(elemP);
-  
-   await fetchProducts('computador');
+// req 11 - Adicione um texto de carregando durante uma requisição à API
+const load = async () => {
+  const elemP = document.createElement('p');
+  elemP.className = 'loading';
+  elemP.innerText = 'carregando...';
+  itens.appendChild(elemP);  
+  await fetchProducts('computador');
   document.querySelector('.loading').remove();
   };
-  load();
-
- window.onload = () => { produto(); };
+  load(); 
+  
+  window.onload = () => { 
+    produto(); 
+    carItens();
+  };
